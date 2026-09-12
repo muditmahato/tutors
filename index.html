@@ -1,0 +1,4011 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academy Tutors - Free Interactive Web & AI Learning Hub</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Academy Tutors is a free, interactive gamified workspace designed for students, teachers, and creators to learn HTML, CSS, JavaScript, and AI fundamentals through hands-on labs.">
+    <meta name="keywords" content="Learn Web Development, Free HTML CSS Course, Flexbox Visual Tutor, AI Code Sandbox, Javascript Quiz">
+    <meta name="author" content="Academy Tutors Technologies">
+    
+    <!-- Custom Style Sheet -->
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* --- CUSTOM PROPERTIES & THEMES --- */
+:root {
+    /* Fonts */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+
+    /* Transition Speeds */
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.2s ease;
+
+    /* Theme-independent colors */
+    --color-primary: #6366f1;
+    --color-primary-rgb: 99, 102, 241;
+    --color-secondary: #06b6d4;
+    --color-secondary-rgb: 6, 182, 212;
+    --color-accent: #a855f7;
+    --color-accent-rgb: 168, 85, 247;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    /* Default: Dark Theme */
+    --bg-main: #07090e;
+    --bg-surface: rgba(13, 18, 30, 0.7);
+    --bg-surface-solid: #0d121e;
+    --bg-surface-hover: rgba(22, 28, 45, 0.8);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color-hover: rgba(255, 255, 255, 0.16);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+    --nav-bg: rgba(7, 9, 14, 0.8);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glow-opacity: 0.15;
+    
+    /* Code Editor Theme Styles */
+    --code-bg: #090d16;
+    --code-header: #111827;
+    --code-text: #e2e8f0;
+    --code-keyword: #ff79c6;
+    --code-string: #f1fa8c;
+    --code-function: #50fa7b;
+    --code-comment: #6272a4;
+}
+
+[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-surface: rgba(255, 255, 255, 0.75);
+    --bg-surface-solid: #ffffff;
+    --bg-surface-hover: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(15, 23, 42, 0.08);
+    --border-color-hover: rgba(15, 23, 42, 0.15);
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+    --nav-bg: rgba(248, 250, 252, 0.8);
+    --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+    --glow-opacity: 0.05;
+
+    /* Code Editor Theme Styles */
+    --code-bg: #1e1e1e;
+    --code-header: #2d2d2d;
+    --code-text: #d4d4d4;
+    --code-keyword: #569cd6;
+    --code-string: #ce9178;
+    --code-function: #dcdcaa;
+    --code-comment: #6a9955;
+}
+
+/* --- RESET & BASE STYLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-body);
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.3s ease;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* --- UTILITY CLASSES --- */
+.container {
+    width: 90%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary) 50%, var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: gradientShift 6s linear infinite;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(var(--color-primary-rgb), 0.35);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+    opacity: 0;
+    transition: var(--transition-smooth);
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(var(--color-primary-rgb), 0.5);
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+    transform: translateY(-2px);
+}
+
+.glass-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+    border-color: var(--border-color-hover);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+    position: relative;
+}
+
+.section-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 30px;
+    background: rgba(var(--color-primary-rgb), 0.1);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    font-family: var(--font-heading);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.15);
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+}
+
+/* --- HEADER & NAVIGATION --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+header.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    transition: var(--transition-smooth);
+}
+
+header.scrolled .nav-container {
+    padding: 12px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--text-main);
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    font-size: 0.95rem;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-main);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: var(--transition-smooth);
+}
+
+.theme-toggle:hover {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.sun-icon {
+    display: none;
+}
+
+[data-theme="light"] .moon-icon {
+    display: none;
+}
+
+[data-theme="light"] .sun-icon {
+    display: block;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    z-index: 1010;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-main);
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    position: relative;
+    padding-top: 180px;
+    padding-bottom: 120px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Glow Background Orbs */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: var(--glow-opacity);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.orb-1 {
+    top: 10%;
+    right: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+}
+
+.orb-2 {
+    bottom: 10%;
+    left: 5%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, var(--color-secondary) 0%, transparent 70%);
+}
+
+.orb-3 {
+    top: 50%;
+    left: 45%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-text h1 {
+    font-family: var(--font-heading);
+    font-size: 4.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: -1.5px;
+}
+
+.hero-text p {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-card-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 400px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.15), rgba(var(--color-secondary-rgb), 0.15));
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-card {
+    position: absolute;
+    width: 80%;
+    padding: 30px;
+    border-radius: 20px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(12px);
+    transition: var(--transition-smooth);
+}
+
+.card-1 {
+    top: -20px;
+    right: -20px;
+    animation: float1 6s ease-in-out infinite;
+}
+
+.card-2 {
+    bottom: -30px;
+    left: -20px;
+    animation: float2 5s ease-in-out infinite;
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(var(--color-primary-rgb), 0.15);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.card-2 .card-icon {
+    background: rgba(var(--color-secondary-rgb), 0.15);
+    color: var(--color-secondary);
+}
+
+.card-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.card-stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* --- STATS SECTION --- */
+.stats-bar {
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(var(--color-primary-rgb), 0.02);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-item p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* --- STUDY SYLLABUS TRACKS (NEW COGNITIVE SECTION) --- */
+.syllabus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.syllabus-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    transition: var(--transition-smooth);
+}
+
+.syllabus-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+    border-radius: 4px 0 0 4px;
+}
+
+.syllabus-card.track-css::before {
+    background: linear-gradient(to bottom, var(--color-secondary), var(--color-accent));
+}
+
+.syllabus-card.track-js::before {
+    background: linear-gradient(to bottom, var(--color-accent), #f43f5e);
+}
+
+.syllabus-card.track-ai::before {
+    background: linear-gradient(to bottom, #f43f5e, var(--color-primary));
+}
+
+.syllabus-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    align-self: flex-start;
+}
+
+.syllabus-card.track-html .syllabus-badge { background: rgba(99, 102, 241, 0.1); color: var(--color-primary); }
+.syllabus-card.track-css .syllabus-badge { background: rgba(6, 182, 212, 0.1); color: var(--color-secondary); }
+.syllabus-card.track-js .syllabus-badge { background: rgba(168, 85, 247, 0.1); color: var(--color-accent); }
+.syllabus-card.track-ai .syllabus-badge { background: rgba(244, 63, 94, 0.1); color: #f43f5e; }
+
+.syllabus-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.syllabus-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* Expandable content styling */
+.btn-syllabus-expand {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+    width: 100%;
+}
+
+.btn-syllabus-expand:hover {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.syllabus-expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, margin-top 0.4s ease;
+    opacity: 0;
+    margin-top: 0;
+    border-top: 0px solid transparent;
+}
+
+.syllabus-card.expanded .syllabus-expandable-content {
+    max-height: 700px;
+    opacity: 1;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+.sub-lessons-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.sub-lesson-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+
+.sub-lesson-code {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    color: var(--color-secondary);
+    background: rgba(var(--color-secondary-rgb), 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.sub-lesson-text {
+    line-height: 1.4;
+}
+
+.sub-lesson-text strong {
+    color: var(--text-main);
+}
+
+.readings-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+}
+
+.readings-title {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
+
+.readings-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reading-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.reading-link::before {
+    content: '→';
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.reading-link:hover {
+    color: var(--color-primary);
+    transform: translateX(2px);
+}
+
+.syllabus-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    font-weight: 600;
+}
+
+/* --- PLAYGROUND SECTION (AI TUTOR CONSOLE) --- */
+.playground-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.playground-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.prompt-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.prompt-suggestion-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.prompt-suggestion-btn:hover, .prompt-suggestion-btn.active {
+    background: var(--bg-surface-hover);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.suggestion-emoji {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-suggestion-btn.active .suggestion-emoji {
+    background: rgba(var(--color-primary-rgb), 0.15);
+    color: var(--color-primary);
+}
+
+.suggestion-text h4 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.suggestion-text p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.prompt-input-box {
+    display: flex;
+    gap: 12px;
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 8px;
+}
+
+.prompt-input-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-main);
+    padding: 10px 15px;
+    font-size: 1rem;
+}
+
+.prompt-input-box input::placeholder {
+    color: var(--text-muted);
+}
+
+/* AI Code Sandbox Screen Mockup */
+.playground-sandbox {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: var(--code-bg);
+    box-shadow: var(--card-shadow);
+    min-height: 480px;
+}
+
+.sandbox-header {
+    background: var(--code-header);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sandbox-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.sandbox-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.sandbox-tabs {
+    display: flex;
+    gap: 5px;
+}
+
+.sandbox-tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+    border: none;
+    background: transparent;
+}
+
+.sandbox-tab.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+}
+
+.sandbox-body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.sandbox-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.sandbox-pane.active {
+    display: block;
+}
+
+/* Console terminal pane styling */
+.console-pane {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    color: #a9b1d6;
+    line-height: 1.5;
+}
+
+.console-log {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.console-log.info { color: #7aa2f7; }
+.console-log.success { color: #9ece6a; }
+.console-log.warning { color: #e0af68; }
+
+.console-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: #a9b1d6;
+    animation: blink 1s step-end infinite;
+}
+
+/* Code Editor text style */
+.editor-pane {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    color: var(--code-text);
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.editor-pane .keyword { color: var(--code-keyword); }
+.editor-pane .string { color: var(--code-string); }
+.editor-pane .function { color: var(--code-function); }
+.editor-pane .comment { color: var(--code-comment); }
+
+/* Live UI Preview Canvas Pane */
+.preview-pane {
+    background: var(--bg-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* Simulated micro applications rendered inside preview-pane */
+.simulated-app {
+    width: 100%;
+    max-width: 360px;
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: var(--text-main);
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Weather App simulator */
+.weather-widget {
+    text-align: center;
+}
+
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.weather-city {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.weather-search {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.weather-search input {
+    flex: 1;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.weather-search button {
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.weather-icon {
+    font-size: 3.5rem;
+    margin: 15px 0;
+    filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.3));
+}
+
+.weather-temp {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.weather-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.weather-detail-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.weather-detail-item strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+/* Task Manager Simulator */
+.todo-widget h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.todo-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.todo-input-row input {
+    flex: 1;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.todo-input-row button {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.todo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    transition: var(--transition-fast);
+}
+
+.todo-item.completed span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.todo-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.todo-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.65rem;
+    color: white;
+    transition: var(--transition-fast);
+}
+
+.todo-item.completed .todo-checkbox {
+    background: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.todo-delete {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    padding: 2px 6px;
+}
+
+.todo-delete:hover {
+    color: var(--color-danger);
+}
+
+/* Calculator Widget */
+.calc-widget {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.calc-display {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: right;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.4rem;
+    font-weight: bold;
+    min-height: 50px;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.calc-btn {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.calc-btn:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--color-primary);
+}
+
+.calc-btn.operator {
+    background: rgba(var(--color-primary-rgb), 0.15);
+    color: var(--color-primary);
+}
+
+.calc-btn.operator:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.calc-btn.equals {
+    background: var(--color-secondary);
+    color: white;
+    grid-column: span 2;
+}
+
+.calc-btn.equals:hover {
+    background: #0891b2;
+}
+
+/* Placeholder loading state for compiler screen */
+.compiling-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+/* --- DYNAMIC VISUAL LAYOUT LAB (REPLACES CUSTOMIZER) --- */
+.customizer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.customizer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.form-field input, .form-field select, .form-field textarea {
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text-main);
+    outline: none;
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
+}
+
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
+}
+
+.color-picker-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.color-option {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition-fast);
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.active {
+    border-color: var(--text-main);
+    transform: scale(1.1);
+}
+
+.color-indigo { background: #6366f1; }
+.color-cyan { background: #06b6d4; }
+.color-emerald { background: #10b981; }
+.color-purple { background: #a855f7; }
+.color-rose { background: #f43f5e; }
+
+/* Visual Layout Live Canvas Preview */
+.layout-preview-frame {
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--bg-surface-solid);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+}
+
+.layout-preview-header {
+    background: var(--code-header);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.layout-preview-body {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Simulated Flexbox container where elements live */
+.flex-lab-preview {
+    flex: 1;
+    background: var(--bg-main);
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    transition: var(--transition-smooth);
+    overflow: auto;
+}
+
+/* Flex items styled as numbered visual cards */
+.flex-lab-item {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.4rem;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: var(--transition-smooth);
+    min-width: 60px;
+    min-height: 60px;
+}
+
+.flex-lab-item span {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-top: 4px;
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+/* CSS Stylesheet live generator code output box */
+.css-output-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: var(--code-text);
+    white-space: pre-wrap;
+    position: relative;
+}
+
+.css-output-box .css-keyword { color: var(--code-keyword); }
+.css-output-box .css-property { color: var(--code-function); }
+.css-output-box .css-value { color: var(--code-string); }
+
+/* --- INTERACTIVE AI & WEB DEV QUIZ (EDUCATION SECTION) --- */
+#education {
+    position: relative;
+}
+
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quiz-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.quiz-progress-fill {
+    width: 25%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quiz-card {
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-card.hide {
+    display: none;
+}
+
+.quiz-question-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.quiz-question-text {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.3;
+}
+
+.quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.quiz-option {
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+    color: var(--text-main);
+    text-align: left;
+}
+
+.quiz-option:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--color-primary);
+    transform: translateX(4px);
+}
+
+.quiz-option.selected {
+    background: rgba(var(--color-primary-rgb), 0.08);
+    border-color: var(--color-primary);
+}
+
+.quiz-option.correct {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.quiz-option.incorrect {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.quiz-option-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.quiz-option.selected .quiz-option-letter {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.quiz-option.correct .quiz-option-letter {
+    background: var(--color-success);
+    border-color: var(--color-success);
+    color: white;
+}
+
+.quiz-option.incorrect .quiz-option-letter {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    color: white;
+}
+
+.quiz-option-status-icon {
+    font-size: 1.2rem;
+    display: none;
+}
+
+.quiz-option.correct .quiz-option-status-icon,
+.quiz-option.incorrect .quiz-option-status-icon {
+    display: block;
+}
+
+.quiz-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+/* Quiz explanation alert */
+.quiz-explanation {
+    background: rgba(var(--color-primary-rgb), 0.05);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.1);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.quiz-explanation strong {
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Quiz Finished Panel Styling */
+.quiz-finished-panel {
+    text-align: center;
+    padding: 30px 10px;
+}
+
+.quiz-result-emoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
+    animation: bounce 2s infinite;
+}
+
+.quiz-score-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 30px;
+    background: rgba(var(--color-accent-rgb), 0.15);
+    color: var(--color-accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(var(--color-accent-rgb), 0.2);
+}
+
+.quiz-finished-panel h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.quiz-finished-panel p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- TESTIMONIALS SECTION --- */
+#testimonials {
+    background: rgba(var(--color-secondary-rgb), 0.02);
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.testimonial-card {
+    flex: 0 0 calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.testimonial-stars {
+    color: var(--color-warning);
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.testimonial-quote {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-style: italic;
+    margin-bottom: 25px;
+    flex: 1;
+    line-height: 1.6;
+}
+
+.testimonial-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.testimonial-details h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.testimonial-details p {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.carousel-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: var(--transition-smooth);
+}
+
+.carousel-btn:hover {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+    color: var(--color-primary);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.carousel-dot.active {
+    background: var(--color-primary);
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* --- FAQ SECTION --- */
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-surface);
+    transition: var(--transition-smooth);
+}
+
+.faq-item:hover {
+    border-color: var(--border-color-hover);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 24px;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-main);
+    text-align: left;
+}
+
+.faq-question h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.faq-toggle-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    color: var(--text-muted);
+}
+
+.faq-item.active .faq-toggle-icon {
+    transform: rotate(180deg);
+    background: rgba(var(--color-primary-rgb), 0.15);
+    color: var(--color-primary);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer-inner {
+    padding: 0 24px 24px 24px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* --- CONTACT SECTION --- */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.contact-info-desc {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-channel-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.contact-channel-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(var(--color-primary-rgb), 0.1);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.contact-channel-details h4 {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.contact-channel-details p {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Toast Notification Styling */
+.toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--color-primary);
+    border-radius: 10px;
+    padding: 16px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transform: translateY(100px);
+    opacity: 0;
+    animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.toast.toast-success {
+    border-left-color: var(--color-success);
+}
+
+.toast.toast-danger {
+    border-left-color: var(--color-danger);
+}
+
+.toast-icon {
+    font-size: 1.2rem;
+}
+
+/* --- FOOTER --- */
+footer {
+    background: var(--bg-surface-solid);
+    border-top: 1px solid var(--border-color);
+    padding: 80px 0 30px 0;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.social-icon:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.footer-column h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 24px;
+}
+
+.footer-column ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
+}
+
+.footer-column ul li a:hover {
+    color: var(--text-main);
+    padding-left: 4px;
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-bottom-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.footer-bottom-links a:hover {
+    color: var(--text-main);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float1 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(12px) rotate(-1deg); }
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- RESPONSIVE DESIGN BREAKPOINTS --- */
+@media (max-width: 1024px) {
+    .container {
+        padding: 80px 0;
+    }
+    .hero-text h1 {
+        font-size: 3.4rem;
+    }
+    .playground-grid, .customizer-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .carousel-track {
+        gap: 20px;
+    }
+    .testimonial-card {
+        flex: 0 0 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: var(--bg-surface-solid);
+        flex-direction: column;
+        justify-content: center;
+        gap: 30px;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        transition: var(--transition-smooth);
+        z-index: 1005;
+        padding: 40px;
+        backdrop-filter: blur(20px);
+    }
+    .nav-menu.active {
+        right: 0;
+    }
+    .hamburger {
+        display: flex;
+    }
+    
+    /* Hamburger animation states */
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero-text h1 {
+        font-size: 2.8rem;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .hero-visual {
+        margin-top: 40px;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .testimonial-card {
+        flex: 0 0 100%;
+    }
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}
+
+
+</style>
+</head>
+<body>
+
+    <!-- --- GLOWING BACKGROUND ORBS --- -->
+    <div class="glow-orb orb-1" id="orb-1"></div>
+    <div class="glow-orb orb-2" id="orb-2"></div>
+    <div class="glow-orb orb-3" id="orb-3"></div>
+
+    <!-- --- HEADER / NAVBAR --- -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-icon">Æ</div>
+                <span>Academy<span class="gradient-text">Tutors</span></span>
+            </a>
+            
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#syllabus" class="nav-link">Syllabus</a></li>
+                    <li><a href="#playground" class="nav-link">AI Tutor</a></li>
+                    <li><a href="#layout-lab" class="nav-link">Visual Lab</a></li>
+                    <li><a href="#education" class="nav-link">Quiz</a></li>
+                    <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Light/Dark Theme">
+                    <!-- Moon Icon -->
+                    <svg class="moon-icon" viewBox="0 0 24 24">
+                        <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8.2-9.8.6-.1 1.2.3 1.3.9.1.6-.2 1.2-.8 1.4-3.5.9-5.7 4.1-5.7 7.7 0 4.4 3.6 8 8 8 3.6 0 6.8-2.2 7.7-5.7.2-.6.8-.9 1.4-.8.6.1 1 .7.9 1.3-.9 4.7-5 8.2-9.8 8.2z"/>
+                    </svg>
+                    <!-- Sun Icon -->
+                    <svg class="sun-icon" viewBox="0 0 24 24">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                    </svg>
+                </button>
+                <a href="#playground" class="btn btn-primary" style="padding: 10px 20px;">Open Sandbox</a>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle Navigation Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- --- MAIN APPLICATION BODY --- -->
+    <main>
+
+        <!-- --- HERO SECTION --- -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <div class="section-tag">Learn by Doing • 100% Free</div>
+                    <h1>Master Web Development with <span class="gradient-text">Interactive Labs</span></h1>
+                    <p>Unlock coding fundamentals for everyone. Master structural markup, align beautiful CSS layouts visually, and test your skills with dynamic AI-powered tutors.</p>
+                    <div class="hero-buttons">
+                        <a href="#syllabus" class="btn btn-primary">
+                            <span>Browse Free Courses</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="#layout-lab" class="btn btn-secondary">Open Visual Lab</a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="floating-card-wrapper">
+                        <!-- Floating Glass Card 1 -->
+                        <div class="floating-card card-1">
+                            <div class="card-icon">🎓</div>
+                            <div class="card-title">Interactive Syllabus</div>
+                            <div class="card-desc">Practice with live compilers instead of just watching dry videos.</div>
+                            <div class="card-stats">
+                                <span>🚀 Zero Setup</span>
+                                <span>📚 HTML, CSS, JS</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Glass Card 2 -->
+                        <div class="floating-card card-2">
+                            <div class="card-icon">🤖</div>
+                            <div class="card-title">24/7 AI Code Tutor</div>
+                            <div class="card-desc">Get instant visual lesson reviews and copy production-ready code formats.</div>
+                            <div class="card-stats">
+                                <span>💡 Easy explanations</span>
+                                <span>⚡ Live Widget Renders</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- STATS BAR --- -->
+        <section class="stats-bar">
+            <div class="container" style="padding: 0;">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3 id="stat-accuracy">100%</h3>
+                        <p>Free to Use</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="stat-apps">24+</h3>
+                        <p>Core Lessons</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="stat-creators">4</h3>
+                        <p>Study Tracks</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="stat-time">0ms</h3>
+                        <p>Local Code Setup</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- STUDY tracks SYLLABUS SECTION (COURSES PATHS) --- -->
+        <section class="syllabus-section" id="syllabus">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Learning Pathways</div>
+                    <h2 class="section-title">Explore Core Syllabus Tracks</h2>
+                    <p class="section-desc">We structure our educational content into progressive study paths. Complete modules, toggle visual parameters, and solve challenges to level up from beginner to professional.</p>
+                </div>
+                
+                <div class="syllabus-grid">
+                    <!-- HTML Course Track -->
+                    <div class="glass-card syllabus-card track-html">
+                        <div class="syllabus-badge">Module 1</div>
+                        <h3>HTML5 Core Structures</h3>
+                        <p>Master semantic tags, structural elements, forms, lists, and metadata blocks that layout internet hubs today.</p>
+                        
+                        <button class="btn-syllabus-expand" aria-label="Expand Core HTML Lessons & Readings">Expand Core Lessons & Readings &darr;</button>
+                        
+                        <div class="syllabus-expandable-content">
+                            <ul class="sub-lessons-list">
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">HTML.1</span>
+                                    <span class="sub-lesson-text"><strong>Semantic Outlines</strong>: Learn &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt; layouts.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">HTML.2</span>
+                                    <span class="sub-lesson-text"><strong>Form Validations</strong>: Master inputs, dropdown selectors, textareas, and interactive submit buttons.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">HTML.3</span>
+                                    <span class="sub-lesson-text"><strong>Embedded Media</strong>: Integrate scalable SVG vector graphics, audio clips, and local media frames.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">HTML.4</span>
+                                    <span class="sub-lesson-text"><strong>A11y & SEO</strong>: Learn semantic heading hierarchy (H1-H6), image alt variables, and page viewports.</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="readings-box">
+                                <div class="readings-title">📖 Modules to Read</div>
+                                <ul class="readings-list">
+                                    <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html" target="_blank" class="reading-link">MDN Guide: Semantic Outline Structures</a></li>
+                                    <li><a href="https://web.dev/learn/html/" target="_blank" class="reading-link">web.dev Course: HTML Element Basics</a></li>
+                                    <li><a href="https://www.a11yproject.com/checklist/" target="_blank" class="reading-link">A11y Project: Accessibility Checklist</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="syllabus-meta" style="margin-top: 15px;">
+                            <span>📚 4 Key Lessons</span>
+                            <span>⏳ ~2 Hours</span>
+                        </div>
+                    </div>
+                    
+                    <!-- CSS Course Track -->
+                    <div class="glass-card syllabus-card track-css">
+                        <div class="syllabus-badge">Module 2</div>
+                        <h3>Modern Layout Styling</h3>
+                        <p>Demystify CSS variables, box layouts, custom properties, glassmorphism shadows, and advanced Flexbox & Grid systems.</p>
+                        
+                        <button class="btn-syllabus-expand" aria-label="Expand Core CSS Lessons & Readings">Expand Core Lessons & Readings &darr;</button>
+                        
+                        <div class="syllabus-expandable-content">
+                            <ul class="sub-lessons-list">
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">CSS.1</span>
+                                    <span class="sub-lesson-text"><strong>Root CSS Variables</strong>: Create theme custom properties, neon lighting glows, and dynamic toggle hooks.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">CSS.2</span>
+                                    <span class="sub-lesson-text"><strong>Box Model Mastery</strong>: Control margin collapse guidelines, padding scaling ratios, and borders.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">CSS.3</span>
+                                    <span class="sub-lesson-text"><strong>CSS Flexbox Rules</strong>: Master flex directions, justified alignments, item gaps, and flex expansions.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">CSS.4</span>
+                                    <span class="sub-lesson-text"><strong>Glassmorphic Cards</strong>: Design frosted glass textures, line refractions, and responsive grids.</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="readings-box">
+                                <div class="readings-title">📖 Modules to Read</div>
+                                <ul class="readings-list">
+                                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout" target="_blank" class="reading-link">MDN Guide: CSS Page Layout Models</a></li>
+                                    <li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank" class="reading-link">CSS-Tricks: The Ultimate Flexbox Sheet</a></li>
+                                    <li><a href="https://glassmorphism.com/" target="_blank" class="reading-link">Glassmorphic Design: Visual Theory Guidelines</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="syllabus-meta" style="margin-top: 15px;">
+                            <span>🎨 4 Visual Labs</span>
+                            <span>⏳ ~3.5 Hours</span>
+                        </div>
+                    </div>
+                    
+                    <!-- JS Course Track -->
+                    <div class="glass-card syllabus-card track-js">
+                        <div class="syllabus-badge">Module 3</div>
+                        <h3>Interactive Web JS</h3>
+                        <p>Animate pages using standard JavaScript. Bind event-listeners, manipulate DOM elements, and evaluate math expressions.</p>
+                        
+                        <button class="btn-syllabus-expand" aria-label="Expand Core JS Lessons & Readings">Expand Core Lessons & Readings &darr;</button>
+                        
+                        <div class="syllabus-expandable-content">
+                            <ul class="sub-lessons-list">
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">JS.1</span>
+                                    <span class="sub-lesson-text"><strong>DOM Selectors</strong>: Fetch elements via querySelector, mutate attributes, and toggle classes.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">JS.2</span>
+                                    <span class="sub-lesson-text"><strong>Event Handlers</strong>: Bind action triggers, capture keyboard typing, and prevent form reloads.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">JS.3</span>
+                                    <span class="sub-lesson-text"><strong>Math Evaluations</strong>: Validate input parameters safely, evaluate equations, and handle floats.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">JS.4</span>
+                                    <span class="sub-lesson-text"><strong>Dynamic DOM Nodes</strong>: Create, append, and delete layout nodes with sliding CSS animations.</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="readings-box">
+                                <div class="readings-title">📖 Modules to Read</div>
+                                <ul class="readings-list">
+                                    <li><a href="https://eloquentjavascript.net/14_dom.html" target="_blank" class="reading-link">Eloquent JavaScript: Document Object Chapter</a></li>
+                                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events" target="_blank" class="reading-link">MDN Guide: Dynamic Event Architectures</a></li>
+                                    <li><a href="https://javascript.info/eval" target="_blank" class="reading-link">JavaScript.info: Script Evaluation Parameters</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="syllabus-meta" style="margin-top: 15px;">
+                            <span>⚡ 4 Coding Sandboxes</span>
+                            <span>⏳ ~4 Hours</span>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Course Track -->
+                    <div class="glass-card syllabus-card track-ai">
+                        <div class="syllabus-badge">Module 4</div>
+                        <h3>Practical AI & Prompting</h3>
+                        <p>Understand the science behind generative models. Practice prompting AI to compile production-ready layout systems instantly.</p>
+                        
+                        <button class="btn-syllabus-expand" aria-label="Expand Core AI Lessons & Readings">Expand Core Lessons & Readings &darr;</button>
+                        
+                        <div class="syllabus-expandable-content">
+                            <ul class="sub-lessons-list">
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">AI.1</span>
+                                    <span class="sub-lesson-text"><strong>Transformer Science</strong>: Study weights, tokens, system rules, and contextual memory logic.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">AI.2</span>
+                                    <span class="sub-lesson-text"><strong>Visual Layout Prompting</strong>: Formulate instructions, declare borders, and style layouts.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">AI.3</span>
+                                    <span class="sub-lesson-text"><strong>Code Block Compiling</strong>: Separate CSS variables, parse JS arrays, and mount inside IFrames.</span>
+                                </li>
+                                <li class="sub-lesson-item">
+                                    <span class="sub-lesson-code">AI.4</span>
+                                    <span class="sub-lesson-text"><strong>Agentic Self-Correction</strong>: Validate scripts, trigger syntax corrections, and debug errors.</span>
+                                </li>
+                            </ul>
+                            
+                            <div class="readings-box">
+                                <div class="readings-title">📖 Modules to Read</div>
+                                <ul class="readings-list">
+                                    <li><a href="https://learnprompting.org/" target="_blank" class="reading-link">LearnPrompting: AI Engineering Curriculums</a></li>
+                                    <li><a href="https://resources.github.com/copilot-best-practices/" target="_blank" class="reading-link">GitHub Hub: Copilot Coding Prompting Sheets</a></li>
+                                    <li><a href="https://platform.openai.com/docs/guides/code" target="_blank" class="reading-link">OpenAI Developer: Code Parser Parameters</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="syllabus-meta" style="margin-top: 15px;">
+                            <span>🤖 4 Practical Challenges</span>
+                            <span>⏳ ~1.5 Hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- PLAYGROUND SECTION (AI TUTOR CONSOLE) --- -->
+        <section class="playground-section" id="playground">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">AI Coding Tutor</div>
+                    <h2 class="section-title">Simulate a Web Dev Lesson</h2>
+                    <p class="section-desc">Pick an educational topic from the list below and click "Generate". Watch the AI Tutor compile terminal logs, write out the source code, and run a live interactive mockup to test!</p>
+                </div>
+                
+                <div class="playground-grid">
+                    <!-- Controls Column -->
+                    <div class="playground-controls">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">Select an Interactive Lesson</h3>
+                        
+                        <div class="prompt-suggestions">
+                            <button class="prompt-suggestion-btn active" data-prompt="Teach me how to build an interactive weather application using simple JavaScript inputs and CSS layout classes." data-app="weather">
+                                <div class="suggestion-emoji">🌤️</div>
+                                <div class="suggestion-text">
+                                    <h4>Lesson: Interactive JS Input</h4>
+                                    <p>Learn state binding, search fields, and weather temperature icons.</p>
+                                </div>
+                            </button>
+                            
+                            <button class="prompt-suggestion-btn" data-prompt="Explain how a responsive Task Planner is created with checklist event-listeners." data-app="todo">
+                                <div class="suggestion-emoji">📋</div>
+                                <div class="suggestion-text">
+                                    <h4>Lesson: JavaScript Event loops</h4>
+                                    <p>Learn array appends, complete flags, and slide deletions.</p>
+                                </div>
+                            </button>
+                            
+                            <button class="prompt-suggestion-btn" data-prompt="Teach me basic mathematical evaluations and custom floating grid buttons." data-app="calculator">
+                                <div class="suggestion-emoji">🧮</div>
+                                <div class="suggestion-text">
+                                    <h4>Lesson: Grid layouts & Math Evaluations</h4>
+                                    <p>Learn decimal calculations, safe evaluators, and CSS spacing grids.</p>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <div class="prompt-input-box">
+                            <input type="text" id="playground-prompt-input" value="Teach me how to build an interactive weather application using simple JavaScript inputs and CSS layout classes." placeholder="Ask Aether AI Tutor a custom coding question...">
+                            <button class="btn btn-primary" id="btn-generate-app" style="padding: 10px 20px; border-radius: 10px;">
+                                <span>Generate</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Sandbox Window Column -->
+                    <div class="playground-sandbox">
+                        <div class="sandbox-header">
+                            <div class="sandbox-dots">
+                                <div class="sandbox-dot dot-red"></div>
+                                <div class="sandbox-dot dot-yellow"></div>
+                                <div class="sandbox-dot dot-green"></div>
+                            </div>
+                            <div class="sandbox-tabs">
+                                <button class="sandbox-tab active" data-pane="console">Console Logs</button>
+                                <button class="sandbox-tab" data-pane="code">Source Code</button>
+                                <button class="sandbox-tab" data-pane="preview">Live Preview</button>
+                            </div>
+                        </div>
+                        
+                        <div class="sandbox-body">
+                            <!-- Console Pane -->
+                            <div class="sandbox-pane console-pane active" id="pane-console">
+                                <div class="console-log info">> Initializing AetherAI Tutor compilation engine...</div>
+                                <div class="console-log success">> Lesson weights validated. Waiting for user compile triggers.</div>
+                                <div class="console-log">> Select a prompt and click "Generate" to stream logs.</div>
+                                <span class="console-cursor"></span>
+                            </div>
+                            
+                            <!-- Source Code Pane -->
+                            <div class="sandbox-pane editor-pane" id="pane-code">
+                                <span class="comment">// Your generated structural code will appear here.</span>
+                            </div>
+                            
+                            <!-- Live Preview Pane -->
+                            <div class="sandbox-pane preview-pane" id="pane-preview">
+                                <div class="compiling-placeholder" id="preview-placeholder">
+                                    <div class="spinner" style="display: none;"></div>
+                                    <p id="placeholder-message">Click "Generate" to preview your live working lesson.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- DYNAMIC VISUAL LAYOUT LAB (REPLACES CUSTOMIZER) --- -->
+        <section class="layout-lab-section" id="layout-lab">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Visual Layout Studio</div>
+                    <h2 class="section-title">The Interactive Flexbox Playground</h2>
+                    <p class="section-desc">Master modern CSS Flexbox and container styling without writing dry syntax. Modify dropdown parameters, adjust gap spacing and sizing sliders, and copy the **live generated CSS styling rule** instantly!</p>
+                </div>
+                
+                <div class="customizer-grid">
+                    <!-- Form Control Column -->
+                    <div class="glass-card customizer-form">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 5px;">Flexbox Parameters</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="flex-direction">flex-direction</label>
+                                <select id="flex-direction">
+                                    <option value="row">row (default)</option>
+                                    <option value="column">column</option>
+                                    <option value="row-reverse">row-reverse</option>
+                                    <option value="column-reverse">column-reverse</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="justify-content">justify-content</label>
+                                <select id="justify-content">
+                                    <option value="flex-start">flex-start (default)</option>
+                                    <option value="center">center</option>
+                                    <option value="flex-end">flex-end</option>
+                                    <option value="space-between">space-between</option>
+                                    <option value="space-around">space-around</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="align-items">align-items</label>
+                                <select id="align-items">
+                                    <option value="stretch">stretch (default)</option>
+                                    <option value="center">center</option>
+                                    <option value="flex-start">flex-start</option>
+                                    <option value="flex-end">flex-end</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="flex-gap">gap (spacing pixels)</label>
+                                <select id="flex-gap">
+                                    <option value="10px">10px</option>
+                                    <option value="20px" selected>20px (default)</option>
+                                    <option value="30px">30px</option>
+                                    <option value="0px">0px</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; margin-top: 10px;">Item Details & Accents</h3>
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="flex-items-count">Number of Items</label>
+                                <select id="flex-items-count">
+                                    <option value="3" selected>3 Items</option>
+                                    <option value="4">4 Items</option>
+                                    <option value="5">5 Items</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="flex-item-radius">border-radius (rounded)</label>
+                                <select id="flex-item-radius">
+                                    <option value="10px" selected>10px (default)</option>
+                                    <option value="20px">20px (super round)</option>
+                                    <option value="0px">0px (square)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-field">
+                            <label>Branding Theme Accent Color</label>
+                            <div class="color-picker-row">
+                                <div class="color-option color-indigo active" data-color="#6366f1" data-rgb="99, 102, 241"></div>
+                                <div class="color-option color-cyan" data-color="#06b6d4" data-rgb="6, 182, 212"></div>
+                                <div class="color-option color-emerald" data-color="#10b981" data-rgb="16, 185, 129"></div>
+                                <div class="color-option color-purple" data-color="#a855f7" data-rgb="168, 85, 247"></div>
+                                <div class="color-option color-rose" data-color="#f43f5e" data-rgb="244, 63, 94"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Preview Screen Column -->
+                    <div class="layout-preview-frame">
+                        <div class="layout-preview-header">
+                            <span>Academy Tutors CSS Lab</span>
+                            <span style="opacity: 0.7;">Interactive Visual Canvas</span>
+                        </div>
+                        
+                        <div class="layout-preview-body">
+                            <!-- Visual flexbox container -->
+                            <div class="flex-lab-preview" id="flex-lab-preview-box">
+                                <div class="flex-lab-item">1<span>Item</span></div>
+                                <div class="flex-lab-item">2<span>Item</span></div>
+                                <div class="flex-lab-item">3<span>Item</span></div>
+                            </div>
+                            
+                            <!-- Generated Live CSS Output Box -->
+                            <div class="css-output-box" id="css-output-text">
+                                <span class="css-keyword">.container</span> {
+  <span class="css-property">display</span>: <span class="css-value">flex</span>;
+  <span class="css-property">flex-direction</span>: <span class="css-value" id="css-val-direction">row</span>;
+  <span class="css-property">justify-content</span>: <span class="css-value" id="css-val-justify">flex-start</span>;
+  <span class="css-property">align-items</span>: <span class="css-value" id="css-val-align">stretch</span>;
+  <span class="css-property">gap</span>: <span class="css-value" id="css-val-gap">20px</span>;
+}
+
+<span class="css-keyword">.item</span> {
+  <span class="css-property">border-radius</span>: <span class="css-value" id="css-val-radius">10px</span>;
+  <span class="css-property">background</span>: <span class="css-value" id="css-val-bg">#6366f1</span>;
+}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- QUIZ EDUCATION SECTION (EDUCATION SECTION) --- -->
+        <section class="education-section" id="education">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Interactive Quiz</div>
+                    <h2 class="section-title">Test Your Web & AI Knowledge</h2>
+                    <p class="section-desc">Assess your understanding of modern browser standards, CSS layout models, and AI architectures. Take our interactive quiz for rapid testing and expert explanations.</p>
+                </div>
+                
+                <div class="quiz-container">
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz-progress"></div>
+                    </div>
+                    
+                    <div class="glass-card quiz-card" id="quiz-card-frame">
+                        <div class="quiz-question-info">
+                            <span id="quiz-counter">Question 1 of 4</span>
+                            <span id="quiz-timer">Score: 0/400</span>
+                        </div>
+                        
+                        <h3 class="quiz-question-text" id="quiz-question-display">Which of the following describes the key purpose of a CSS transition?</h3>
+                        
+                        <div class="quiz-options-list" id="quiz-options-wrapper">
+                            <!-- Options will be rendered dynamically by JavaScript -->
+                        </div>
+                        
+                        <div class="quiz-explanation" id="quiz-explanation-box" style="display: none;">
+                            <strong>Academy Tutors Explanation</strong>
+                            <span id="quiz-explanation-text">CSS Transitions allow property changes in CSS values to occur smoothly over a specified duration rather than instantaneously.</span>
+                        </div>
+                        
+                        <div class="quiz-footer">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;" id="quiz-feedback-prompt">Choose the correct answer from the list above.</span>
+                            <button class="btn btn-primary" id="btn-quiz-next" style="padding: 10px 22px; display: none;">Next Question</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Score/Success screen -->
+                    <div class="glass-card quiz-card quiz-finished-panel hide" id="quiz-results-frame">
+                        <div class="quiz-result-emoji" id="quiz-result-emoji">🏆</div>
+                        <div class="quiz-score-badge" id="quiz-score-display">Total Score: 400 pts</div>
+                        <h3 id="quiz-result-title">Absolute Perfection!</h3>
+                        <p id="quiz-result-desc">You displayed superb understanding of engineering layers and responsive styling. You are certified as an Academy Tutors Master!</p>
+                        <button class="btn btn-primary" id="btn-quiz-restart" style="padding: 12px 28px;">Take Quiz Again</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- TESTIMONIALS SECTION --- -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Ecosystem Reviews</div>
+                    <h2 class="section-title">Loved by Students & Teachers</h2>
+                    <p class="section-desc">See how students, developers, and educators are utilizing our free visual sandbox environments to master full stack engineering tracks.</p>
+                </div>
+                
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Review Card 1 -->
+                        <div class="glass-card testimonial-card">
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-quote">"The Visual Flexbox Lab is absolutely stellar. Adjusting alignment attributes and watching item blocks move instantly while generating clean copyable CSS saved me days of dry reading!"</p>
+                            <div class="testimonial-user">
+                                <div class="testimonial-avatar">SM</div>
+                                <div class="testimonial-details">
+                                    <h4>Sarah Morrison</h4>
+                                    <p>High School CS Student</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Review Card 2 -->
+                        <div class="glass-card testimonial-card">
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-quote">"Academy Tutors changed how I teach web technologies. Using the interactive AI Tutor console in my online classrooms keeps my students engaged through visual compiling codes."</p>
+                            <div class="testimonial-user">
+                                <div class="testimonial-avatar">AL</div>
+                                <div class="testimonial-details">
+                                    <h4>Alex Langston</h4>
+                                    <p>Online Coding Instructor</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Review Card 3 -->
+                        <div class="glass-card testimonial-card">
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-quote">"Having live compile simulators, real-time css alignment boxes, and gamified questionnaires in one cohesive free platform is a total goldmine. Stunning layout aesthetic!"</p>
+                            <div class="testimonial-user">
+                                <div class="testimonial-avatar">DK</div>
+                                <div class="testimonial-details">
+                                    <h4>Dr. Kenneth Vance</h4>
+                                    <p>Computer Science Professor at NYU</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Review Card 4 -->
+                        <div class="glass-card testimonial-card">
+                            <div class="testimonial-stars">★★★★★</div>
+                            <p class="testimonial-quote">"The responsive layouts are truly flawless. Tried these visual sandboxes on my mobile phone, and the visual cards repositioned perfectly inside the media boundaries."</p>
+                            <div class="testimonial-user">
+                                <div class="testimonial-avatar">HP</div>
+                                <div class="testimonial-details">
+                                    <h4>Harley Pratt</h4>
+                                    <p>Self-Taught Creator</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-nav">
+                        <button class="carousel-btn" id="carousel-prev" aria-label="Previous Reviews">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <div class="carousel-dots" id="carousel-dots-wrapper">
+                            <!-- Dynamic Dots -->
+                        </div>
+                        <button class="carousel-btn" id="carousel-next" aria-label="Next Reviews">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- FAQ SECTION (ACCORDIONS) --- -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Frequently Asked</div>
+                    <h2 class="section-title">Got Learning Questions?</h2>
+                    <p class="section-desc">Browse through details regarding free hosting, syllabus paths, code downloads, and interactive layouts.</p>
+                </div>
+                
+                <div class="faq-list">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <h3>Is Academy Tutors really completely free for everyone?</h3>
+                            <div class="faq-toggle-icon">
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Yes! Academy Tutors is structured as a free, open-source educational platform. We believe high-quality, interactive front-end and AI training should be accessible to anyone globally without payment requirements.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <h3>Can I download or copy my visual Flexbox styles?</h3>
+                            <div class="faq-toggle-icon">
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Absolutely. The visual layout code outputs update instantly on the screen as you select configurations in the Flexbox Lab. You can copy the code blocks directly to use in your local styles sheets.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <h3>Do I need previous coding experience to get started?</h3>
+                            <div class="faq-toggle-icon">
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Not at all! The platform is specifically tailored for complete beginners. By combining gamified quizzes, visual styling toggles, and step-by-step AI tutoring lessons, you can learn basic logic flows easily.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <h3>Can teachers use Academy Tutors inside their schools?</h3>
+                            <div class="faq-toggle-icon">
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Yes! In fact, we encourage educators to leverage our Visual Flexbox Lab and Gamified Quiz Cards as supplementary tools inside high school or college laboratories. It provides hands-on visual confirmation that standard lectures lack.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- CONTACT / SUGGESTIONS SECTION --- -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Course Requests</div>
+                    <h2 class="section-title">Request a New Study Track</h2>
+                    <p class="section-desc">Have a specific web development topic or AI model structure you want us to add to the syllabus? Submit your suggestion below, and our training writers will research it!</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <!-- Info Column -->
+                    <div class="contact-info">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800;">Let's build the ultimate free curriculum together.</h3>
+                        <p class="contact-info-desc">Expect a prompt, encouraging reply from our teaching coordinators within 24 operational hours.</p>
+                    </div>
+                    
+                    <!-- Form Column -->
+                    <div class="glass-card">
+                        <form class="contact-form" id="contact-form" onsubmit="return false;">
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label for="c-name">Full Name</label>
+                                    <input type="text" id="c-name" placeholder="John Doe" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="c-email">Your Email Address</label>
+                                    <input type="email" id="c-email" placeholder="john@email.com" required>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="c-message">Describe the topic or lesson layout you'd like to see added...</label>
+                                <textarea id="c-message" rows="5" placeholder="Include as much detail as possible (e.g. CSS Grid, JS Promises, React Hooks)..." style="resize: none;" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="btn-submit-contact" style="width: 100%;">Submit Suggestion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- --- FOOTER --- -->
+    <footer>
+        <div class="container" style="padding-top: 0; padding-bottom: 0;">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#home" class="logo">
+                        <div class="logo-icon">Æ</div>
+                        <span>Academy<span class="gradient-text">Tutors</span></span>
+                    </a>
+                    <p>Next-generation, premium educational sandboxes and visual layout laboratories built to democratize modern computer science education worldwide.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="social-icon" aria-label="Twitter Account">𝕏</a>
+                        <a href="#" class="social-icon" aria-label="GitHub Account">🐙</a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn Account">💼</a>
+                        <a href="#" class="social-icon" aria-label="Discord Community">💬</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Study Paths</h4>
+                    <ul>
+                        <li><a href="#syllabus">HTML5 Structures</a></li>
+                        <li><a href="#layout-lab">CSS Flexbox Studio</a></li>
+                        <li><a href="#playground">Interactive JS Tutor</a></li>
+                        <li><a href="#education">AI Prompting Basics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Ecosystem</h4>
+                    <ul>
+                        <li><a href="#testimonials">Student Reviews</a></li>
+                        <li><a href="#faq">Curriculum FAQs</a></li>
+                        <li><a href="#">Instructor Portal</a></li>
+                        <li><a href="#">Academic Open-Source</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Legal & Safety</h4>
+                    <ul>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Privacy Framework</a></li>
+                        <li><a href="#">School Safety Keys</a></li>
+                        <li><a href="#">Accessibility Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Academy Tutors. Open-source educational repository under MIT License.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- --- TOAST NOTIFICATIONS POPUP FRAMEWORK --- -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- --- DYNAMIC LOGIC SCRIPT --- -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* ==========================================================================
+       1. GLOBAL UTILITIES & DATA
+       ========================================================================== */
+
+    // Simulated Code Database for Playground Compiler
+    const mockAppCode = {
+        weather: `<!-- Lesson Output: JS Input binding & Weather Widgets -->
+<div class="weather-widget">
+    <div class="weather-header">
+        <span class="weather-city" id="city-title">London</span>
+        <span style="font-size: 0.8rem; opacity: 0.7;">Interactive Lesson</span>
+    </div>
+    <div class="weather-search">
+        <input type="text" id="weather-city-input" placeholder="Try Delhi, Tokyo, Paris...">
+        <button id="btn-weather-search">Search</button>
+    </div>
+    <div class="weather-icon" id="weather-icon">🌤️</div>
+    <div class="weather-temp" id="weather-temp-display">18°C</div>
+    <div class="weather-desc" id="weather-desc-display">Partly Cloudy</div>
+    <div class="weather-details">
+        <div class="weather-detail-item">
+            Wind
+            <strong id="weather-wind">14 km/h</strong>
+        </div>
+        <div class="weather-detail-item">
+            Humidity
+            <strong id="weather-humidity">64%</strong>
+        </div>
+    </div>
+</div>`,
+        todo: `<!-- Lesson Output: JS Arrays & Checklist Event Loops -->
+<div class="todo-widget">
+    <h3>Academy Tutors Task Planner</h3>
+    <div class="todo-input-row">
+        <input type="text" id="todo-new-input" placeholder="Add custom course target...">
+        <button id="btn-todo-add">Add</button>
+    </div>
+    <ul class="todo-list" id="todo-list-wrapper">
+        <li class="todo-item">
+            <div class="todo-item-left">
+                <div class="todo-checkbox"></div>
+                <span>Learn CSS Variables layout variables</span>
+            </div>
+            <button class="todo-delete">&times;</button>
+        </li>
+        <li class="todo-item completed">
+            <div class="todo-item-left">
+                <div class="todo-checkbox">✓</div>
+                <span>Complete HTML semantic structure</span>
+            </div>
+            <button class="todo-delete">&times;</button>
+        </li>
+    </ul>
+</div>`,
+        calculator: `<!-- Lesson Output: Grid Layouts & Safe Math Calculators -->
+<div class="calc-widget">
+    <div class="calc-display" id="calc-screen">0</div>
+    <div class="calc-grid">
+        <button class="calc-btn operator" data-val="C">C</button>
+        <button class="calc-btn operator" data-val="()">()</button>
+        <button class="calc-btn operator" data-val="%">%</button>
+        <button class="calc-btn operator" data-val="/">/</button>
+        
+        <button class="calc-btn" data-val="7">7</button>
+        <button class="calc-btn" data-val="8">8</button>
+        <button class="calc-btn" data-val="9">9</button>
+        <button class="calc-btn operator" data-val="*">*</button>
+        
+        <button class="calc-btn" data-val="4">4</button>
+        <button class="calc-btn" data-val="5">5</button>
+        <button class="calc-btn" data-val="6">6</button>
+        <button class="calc-btn operator" data-val="-">-</button>
+        
+        <button class="calc-btn" data-val="1">1</button>
+        <button class="calc-btn" data-val="2">2</button>
+        <button class="calc-btn" data-val="3">3</button>
+        <button class="calc-btn operator" data-val="+">+</button>
+        
+        <button class="calc-btn" data-val="0">0</button>
+        <button class="calc-btn" data-val=".">.</button>
+        <button class="calc-btn equals" data-val="=">=</button>
+    </div>
+</div>`
+    };
+
+    // Educational Quiz Questions
+    const quizQuestions = [
+        {
+            question: "What is the primary architectural purpose of a CSS transition?",
+            options: [
+                "To structure HTML nodes dynamically into the browser view.",
+                "To control smooth parameter changes in CSS properties over a specified duration.",
+                "To run deep learning models natively in client systems.",
+                "To manage secure database transactions asynchronously."
+            ],
+            correct: 1,
+            explanation: "CSS Transitions provide a way to control animation speed when changing CSS properties smoothly rather than having the change take effect instantly."
+        },
+        {
+            question: "Which HTML5 tag represents the most appropriate semantic container for navigation links?",
+            options: [
+                "<div class='navbar-links'>",
+                "<header>",
+                "<nav>",
+                "<section id='navigation'>"
+            ],
+            correct: 2,
+            explanation: "The HTML5 <nav> element designates a section of a page that contains links to other pages or sections within the same website, improving accessibility and SEO."
+        },
+        {
+            question: "In standard JavaScript event-driven architectures, what does 'preventDefault()' do?",
+            options: [
+                "It terminates background browser threads instantly.",
+                "It blocks cross-origin fetch calls globally.",
+                "It prevents the default user-agent action associated with a specific event (e.g. form reloads).",
+                "It converts text variables to encrypted hash arrays."
+            ],
+            correct: 2,
+            explanation: "event.preventDefault() instructs the user agent that if the event goes unhandled, its default action (like refreshing the page during a form submit) should not be taken."
+        },
+        {
+            question: "What are CSS variables (custom properties) extremely useful for in modern front-ends?",
+            options: [
+                "Accelerating database queries.",
+                "Compressing large visual assets automatically.",
+                "Enabling centralized color-theming (like light/dark modes) that updates dynamically.",
+                "Managing multi-factor authentication sessions."
+            ],
+            correct: 3,
+            explanation: "CSS custom properties (variables) permit developers to declare styling variables in the :root selector that can be modified globally and updated on-the-fly using JavaScript."
+        }
+    ];
+
+    // Simulated City Weather Data
+    const mockWeather = {
+        london: { temp: "15°C", desc: "Light Drizzle", icon: "🌧️", wind: "18 km/h", humidity: "78%", bg: "linear-gradient(135deg, #475569, #64748b)" },
+        tokyo: { temp: "22°C", desc: "Clear Skies", icon: "☀️", wind: "8 km/h", humidity: "42%", bg: "linear-gradient(135deg, #0284c7, #38bdf8)" },
+        paris: { temp: "17°C", desc: "Overcast Clouds", icon: "☁️", wind: "12 km/h", humidity: "60%", bg: "linear-gradient(135deg, #334155, #475569)" },
+        newyork: { temp: "11°C", desc: "Heavy Snowfall", icon: "❄️", wind: "24 km/h", humidity: "88%", bg: "linear-gradient(135deg, #0f172a, #1e293b)" },
+        delhi: { temp: "38°C", desc: "Extremely Hot", icon: "🔥", wind: "10 km/h", humidity: "20%", bg: "linear-gradient(135deg, #ea580c, #f97316)" }
+    };
+
+
+    /* ==========================================================================
+       2. LIGHT/DARK THEME SWITCHER
+       ========================================================================== */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('aether-theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('aether-theme', newTheme);
+        createToast(`Switched to ${newTheme.toUpperCase()} theme mode!`, 'success');
+    });
+
+
+    /* ==========================================================================
+       3. NAVIGATION & RESPONSIVE SCROLL EFFECTS
+       ========================================================================== */
+    const header = document.getElementById('header');
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        highlightActiveSection();
+    });
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+
+    const sections = document.querySelectorAll('section');
+    function highlightActiveSection() {
+        let currentSectionId = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+
+    /* ==========================================================================
+       4. PLAYGROUND SECTION (AI TUTOR SIMULATOR)
+       ========================================================================== */
+    const suggestionBtns = document.querySelectorAll('.prompt-suggestion-btn');
+    const promptInput = document.getElementById('playground-prompt-input');
+    const btnGenerate = document.getElementById('btn-generate-app');
+    const sandboxTabs = document.querySelectorAll('.sandbox-tab');
+    const sandboxPanes = document.querySelectorAll('.sandbox-pane');
+    
+    const consolePane = document.getElementById('pane-console');
+    const codePane = document.getElementById('pane-code');
+    const previewPane = document.getElementById('pane-preview');
+    const previewPlaceholder = document.getElementById('preview-placeholder');
+
+    let activeAppType = 'weather';
+    let isCompiling = false;
+
+    suggestionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (isCompiling) return;
+            suggestionBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const prompt = btn.getAttribute('data-prompt');
+            activeAppType = btn.getAttribute('data-app');
+            promptInput.value = prompt;
+        });
+    });
+
+    btnGenerate.addEventListener('click', () => {
+        if (isCompiling) return;
+        runAetherCompiler(activeAppType);
+    });
+
+    sandboxTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetPaneId = `pane-${tab.getAttribute('data-pane')}`;
+            
+            sandboxTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            sandboxPanes.forEach(pane => {
+                pane.classList.remove('active');
+                if (pane.getAttribute('id') === targetPaneId) {
+                    pane.classList.add('active');
+                }
+            });
+        });
+    });
+
+    function runAetherCompiler(appType) {
+        isCompiling = true;
+        btnGenerate.disabled = true;
+        btnGenerate.querySelector('span').innerText = 'Explaining...';
+
+        switchSandboxTab('console');
+
+        consolePane.innerHTML = `<div class="console-log info">> Connecting to AetherAI-Lesson-Tutor...</div>
+                                <div class="console-log">> Topic request: Explain and display [${appType.toUpperCase()}_LOGIC] structure.</div>
+                                <span class="console-cursor"></span>`;
+
+        const logs = [
+            { text: `> Loading CS Web Curriculum lessons database...`, type: 'info', delay: 400 },
+            { text: `> Compiling visual widgets representation code (DOM components)...`, type: 'info', delay: 800 },
+            { text: `> Formatting syntax-highlighted editor code (HTML/CSS/JS)...`, type: 'info', delay: 1200 },
+            { text: `> Resolving responsive viewport media rules...`, type: 'info', delay: 1600 },
+            { text: `> Ensuring proper semantic tag hierarchy and accessibility tags...`, type: 'warning', delay: 2000 },
+            { text: `> Preparing preview card structures...`, type: 'info', delay: 2300 },
+            { text: `> Lesson successfully compiled! Open Live Preview to play with the code.`, type: 'success', delay: 2600 }
+        ];
+
+        logs.forEach((logItem, index) => {
+            setTimeout(() => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `console-log ${logItem.type || ''}`;
+                logDiv.innerText = logItem.text;
+                
+                const cursor = consolePane.querySelector('.console-cursor');
+                consolePane.insertBefore(logDiv, cursor);
+
+                if (index === logs.length - 1) {
+                    finishCompilation(appType);
+                }
+            }, logItem.delay);
+        });
+    }
+
+    function switchSandboxTab(tabName) {
+        sandboxTabs.forEach(t => {
+            if (t.getAttribute('data-pane') === tabName) {
+                t.click();
+            }
+        });
+    }
+
+    function finishCompilation(appType) {
+        const rawCode = mockAppCode[appType];
+        const escapedCode = rawCode
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+        let highlightedCode = escapedCode
+            .replace(/(&lt;!--.*?--&gt;)/g, '<span class="comment">$1</span>')
+            .replace(/(&lt;\/?[a-z1-6-]+)/gi, '<span class="keyword">$1</span>')
+            .replace(/(&gt;)/g, '<span class="keyword">$1</span>')
+            .replace(/(id|class|style|value|placeholder|rows|data-val)=/g, '<span class="function">$1</span>=')
+            .replace(/(&quot;.*?&quot;)/g, '<span class="string">$1</span>');
+
+        codePane.innerHTML = `<pre><code>${highlightedCode}</code></pre>`;
+
+        previewPane.innerHTML = '';
+        const appWrapper = document.createElement('div');
+        appWrapper.className = 'simulated-app';
+        appWrapper.innerHTML = rawCode;
+        previewPane.appendChild(appWrapper);
+
+        setTimeout(() => {
+            if (appType === 'weather') {
+                bindWeatherWidgetEvents();
+            } else if (appType === 'todo') {
+                bindTodoWidgetEvents();
+            } else if (appType === 'calculator') {
+                bindCalculatorEvents();
+            }
+        }, 100);
+
+        setTimeout(() => {
+            switchSandboxTab('preview');
+            isCompiling = false;
+            btnGenerate.disabled = false;
+            btnGenerate.querySelector('span').innerText = 'Generate';
+            createToast('Web Dev Lesson Preview is now Live!', 'success');
+        }, 600);
+    }
+
+    function bindWeatherWidgetEvents() {
+        const searchBtn = document.getElementById('btn-weather-search');
+        const cityInput = document.getElementById('weather-city-input');
+        
+        const cityTitle = document.getElementById('city-title');
+        const weatherIcon = document.getElementById('weather-icon');
+        const tempDisplay = document.getElementById('weather-temp-display');
+        const descDisplay = document.getElementById('weather-desc-display');
+        const windDisplay = document.getElementById('weather-wind');
+        const humidityDisplay = document.getElementById('weather-humidity');
+        const widgetCard = document.querySelector('.simulated-app');
+
+        const triggerSearch = () => {
+            const rawCity = cityInput.value.trim().toLowerCase().replace(/\s+/g, '');
+            if (!rawCity) return;
+
+            if (mockWeather[rawCity]) {
+                const w = mockWeather[rawCity];
+                
+                widgetCard.style.opacity = '0.5';
+                widgetCard.style.transform = 'scale(0.98)';
+                
+                setTimeout(() => {
+                    cityTitle.innerText = cityInput.value.trim();
+                    tempDisplay.innerText = w.temp;
+                    descDisplay.innerText = w.desc;
+                    weatherIcon.innerText = w.icon;
+                    windDisplay.innerText = w.wind;
+                    humidityDisplay.innerText = w.humidity;
+                    widgetCard.style.background = w.bg;
+                    
+                    widgetCard.style.opacity = '1';
+                    widgetCard.style.transform = 'scale(1)';
+                    createToast(`Fetched forecast data for ${cityInput.value}!`, 'success');
+                }, 250);
+            } else {
+                createToast('City forecast not in lesson indexes! Search London, Tokyo, Paris, Delhi, New York.', 'danger');
+            }
+        };
+
+        searchBtn.addEventListener('click', triggerSearch);
+        cityInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') triggerSearch();
+        });
+    }
+
+    function bindTodoWidgetEvents() {
+        const addBtn = document.getElementById('btn-todo-add');
+        const taskInput = document.getElementById('todo-new-input');
+        const listWrapper = document.getElementById('todo-list-wrapper');
+
+        const addTask = () => {
+            const val = taskInput.value.trim();
+            if (!val) return;
+
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+            li.innerHTML = `
+                <div class="todo-item-left">
+                    <div class="todo-checkbox"></div>
+                    <span>${val}</span>
+                </div>
+                <button class="todo-delete">&times;</button>
+            `;
+
+            li.style.transform = 'translateY(10px)';
+            li.style.opacity = '0';
+            listWrapper.appendChild(li);
+            
+            setTimeout(() => {
+                li.style.transform = 'translateY(0)';
+                li.style.opacity = '1';
+            }, 10);
+
+            taskInput.value = '';
+            createToast('Added lesson task target!', 'success');
+            bindTodoListItemEvents(li);
+        };
+
+        addBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        listWrapper.querySelectorAll('li').forEach(item => {
+            bindTodoListItemEvents(item);
+        });
+    }
+
+    function bindTodoListItemEvents(item) {
+        const checkbox = item.querySelector('.todo-checkbox');
+        const deleteBtn = item.querySelector('.todo-delete');
+
+        checkbox.addEventListener('click', () => {
+            item.classList.toggle('completed');
+            const isCompleted = item.classList.contains('completed');
+            checkbox.innerText = isCompleted ? '✓' : '';
+        });
+
+        deleteBtn.addEventListener('click', () => {
+            item.style.transform = 'translateX(-20px)';
+            item.style.opacity = '0';
+            setTimeout(() => {
+                item.remove();
+                createToast('Lesson target removed.', 'success');
+            }, 250);
+        });
+    }
+
+    function bindCalculatorEvents() {
+        const screen = document.getElementById('calc-screen');
+        const buttons = document.querySelectorAll('.calc-btn');
+
+        let displayVal = '0';
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.getAttribute('data-val');
+
+                if (key === 'C') {
+                    displayVal = '0';
+                } else if (key === '=') {
+                    try {
+                        let cleanExpr = displayVal
+                            .replace(/%/g, '/100')
+                            .replace(/×/g, '*')
+                            .replace(/÷/g, '/');
+                        
+                        if (/^[0-9+\-*/().\s]+$/.test(cleanExpr)) {
+                            displayVal = eval(cleanExpr).toString();
+                        } else {
+                            displayVal = 'Err';
+                        }
+                    } catch (e) {
+                        displayVal = 'Err';
+                    }
+                } else {
+                    if (displayVal === '0' || displayVal === 'Err') {
+                        displayVal = key;
+                    } else {
+                        displayVal += key;
+                    }
+                }
+
+                screen.innerText = displayVal;
+            });
+        });
+    }
+
+
+    /* ==========================================================================
+       5. DYNAMIC VISUAL LAYOUT LAB (FLEXBOX STUDIO LOGIC)
+       ========================================================================== */
+    const flexDirSelect = document.getElementById('flex-direction');
+    const justifySelect = document.getElementById('justify-content');
+    const alignSelect = document.getElementById('align-items');
+    const gapSelect = document.getElementById('flex-gap');
+    const itemsCountSelect = document.getElementById('flex-items-count');
+    const itemRadiusSelect = document.getElementById('flex-item-radius');
+    const colorOptions = document.querySelectorAll('.color-option');
+
+    const flexPreviewBox = document.getElementById('flex-lab-preview-box');
+    const cssValDirection = document.getElementById('css-val-direction');
+    const cssValJustify = document.getElementById('css-val-justify');
+    const cssValAlign = document.getElementById('css-val-align');
+    const cssValGap = document.getElementById('css-val-gap');
+    const cssValRadius = document.getElementById('css-val-radius');
+    const cssValBg = document.getElementById('css-val-bg');
+
+    let activeLabColor = '#6366f1';
+
+    // Flex Direction Dropdown change
+    flexDirSelect.addEventListener('change', () => {
+        const val = flexDirSelect.value;
+        flexPreviewBox.style.flexDirection = val;
+        cssValDirection.innerText = val;
+    });
+
+    // Justify Content Dropdown change
+    justifySelect.addEventListener('change', () => {
+        const val = justifySelect.value;
+        flexPreviewBox.style.justifyContent = val;
+        cssValJustify.innerText = val;
+    });
+
+    // Align Items Dropdown change
+    alignSelect.addEventListener('change', () => {
+        const val = alignSelect.value;
+        flexPreviewBox.style.alignItems = val;
+        cssValAlign.innerText = val;
+    });
+
+    // Gap Spacing change
+    gapSelect.addEventListener('change', () => {
+        const val = gapSelect.value;
+        flexPreviewBox.style.gap = val;
+        cssValGap.innerText = val;
+    });
+
+    // Item border-radius change
+    itemRadiusSelect.addEventListener('change', () => {
+        const val = itemRadiusSelect.value;
+        const items = flexPreviewBox.querySelectorAll('.flex-lab-item');
+        items.forEach(item => {
+            item.style.borderRadius = val;
+        });
+        cssValRadius.innerText = val;
+    });
+
+    // Flex Items Count change
+    itemsCountSelect.addEventListener('change', () => {
+        const val = parseInt(itemsCountSelect.value);
+        
+        // Re-render items dynamically
+        flexPreviewBox.innerHTML = '';
+        for (let i = 1; i <= val; i++) {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'flex-lab-item';
+            itemCard.innerHTML = `${i}<span>Item</span>`;
+            
+            // Set styles matching active properties
+            itemCard.style.borderRadius = itemRadiusSelect.value;
+            itemCard.style.background = activeLabColor;
+            
+            flexPreviewBox.appendChild(itemCard);
+        }
+    });
+
+    // Brand accent color selection binder
+    colorOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            colorOptions.forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+
+            const hex = opt.getAttribute('data-color');
+            const rgb = opt.getAttribute('data-rgb');
+
+            activeLabColor = hex;
+
+            // Apply custom CSS variable rules directly onto the flex items preview
+            const items = flexPreviewBox.querySelectorAll('.flex-lab-item');
+            items.forEach(item => {
+                item.style.background = hex;
+            });
+            
+            cssValBg.innerText = hex;
+            createToast(`Applied brand custom Accent Hue to Visual Lab!`, 'success');
+        });
+    });
+
+
+    /* ==========================================================================
+       6. GAMIFIED EDUCATION QUIZ ENGINE
+       ========================================================================== */
+    const quizCardFrame = document.getElementById('quiz-card-frame');
+    const quizResultsFrame = document.getElementById('quiz-results-frame');
+    const quizQuestionDisplay = document.getElementById('quiz-question-display');
+    const quizOptionsWrapper = document.getElementById('quiz-options-wrapper');
+    const quizCounter = document.getElementById('quiz-counter');
+    const quizScoreTimer = document.getElementById('quiz-timer');
+    const quizProgressFill = document.getElementById('quiz-progress');
+    const quizExplanationBox = document.getElementById('quiz-explanation-box');
+    const quizExplanationText = document.getElementById('quiz-explanation-text');
+    const quizFeedbackPrompt = document.getElementById('quiz-feedback-prompt');
+    const btnQuizNext = document.getElementById('btn-quiz-next');
+    
+    const resultsEmoji = document.getElementById('quiz-result-emoji');
+    const resultsScoreText = document.getElementById('quiz-score-display');
+    const resultsTitleText = document.getElementById('quiz-result-title');
+    const resultsDescText = document.getElementById('quiz-result-desc');
+    const btnQuizRestart = document.getElementById('btn-quiz-restart');
+
+    let currentQuestionIndex = 0;
+    let quizScore = 0;
+    let hasAnswered = false;
+
+    function initQuiz() {
+        currentQuestionIndex = 0;
+        quizScore = 0;
+        hasAnswered = false;
+        
+        quizResultsFrame.classList.add('hide');
+        quizCardFrame.classList.remove('hide');
+        
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        hasAnswered = false;
+        btnQuizNext.style.display = 'none';
+        quizExplanationBox.style.display = 'none';
+        quizFeedbackPrompt.innerText = 'Choose the correct answer from the list above.';
+        quizFeedbackPrompt.style.color = 'var(--text-muted)';
+        
+        const q = quizQuestions[currentQuestionIndex];
+        
+        quizCounter.innerText = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+        quizScoreTimer.innerText = `Score: ${quizScore}/${quizQuestions.length * 100}`;
+        
+        const percentage = ((currentQuestionIndex) / quizQuestions.length) * 100;
+        quizProgressFill.style.width = `${percentage}%`;
+
+        quizQuestionDisplay.innerText = q.question;
+
+        quizOptionsWrapper.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+        
+        q.options.forEach((optText, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option';
+            btn.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <div class="quiz-option-letter">${letters[index]}</div>
+                    <span>${optText}</span>
+                </div>
+                <div class="quiz-option-status-icon"></div>
+            `;
+            
+            btn.addEventListener('click', () => {
+                if (hasAnswered) return;
+                evaluateAnswer(index, btn);
+            });
+            
+            quizOptionsWrapper.appendChild(btn);
+        });
+    }
+
+    function evaluateAnswer(selectedIndex, selectedBtn) {
+        hasAnswered = true;
+        const q = quizQuestions[currentQuestionIndex];
+        const optionButtons = quizOptionsWrapper.querySelectorAll('.quiz-option');
+
+        quizExplanationText.innerText = q.explanation;
+        quizExplanationBox.style.display = 'block';
+
+        if (selectedIndex === q.correct) {
+            selectedBtn.classList.add('correct');
+            selectedBtn.querySelector('.quiz-option-status-icon').innerText = '✓';
+            quizScore += 100;
+            quizScoreTimer.innerText = `Score: ${quizScore}/${quizQuestions.length * 100}`;
+            
+            quizFeedbackPrompt.innerText = 'Correct Answer! Superb understanding of CSS transition modules.';
+            quizFeedbackPrompt.style.color = 'var(--color-success)';
+            createToast('+100 Points! Correct.', 'success');
+        } else {
+            selectedBtn.classList.add('incorrect');
+            selectedBtn.querySelector('.quiz-option-status-icon').innerText = '✗';
+            
+            optionButtons[q.correct].classList.add('correct');
+            optionButtons[q.correct].querySelector('.quiz-option-status-icon').innerText = '✓';
+            
+            quizFeedbackPrompt.innerText = 'Incorrect option. Review the explanation details below.';
+            quizFeedbackPrompt.style.color = 'var(--color-danger)';
+            createToast('Incorrect. Study lesson parameters.', 'danger');
+        }
+
+        btnQuizNext.style.display = 'block';
+    }
+
+    btnQuizNext.addEventListener('click', () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizQuestions.length) {
+            renderQuestion();
+        } else {
+            finishQuiz();
+        }
+    });
+
+    function finishQuiz() {
+        quizCardFrame.classList.add('hide');
+        quizResultsFrame.classList.remove('hide');
+        quizProgressFill.style.width = '100%';
+
+        resultsScoreText.innerText = `Total Score: ${quizScore}/${quizQuestions.length * 100} pts`;
+
+        if (quizScore === quizQuestions.length * 100) {
+            resultsEmoji.innerText = '🏆';
+            resultsTitleText.innerText = 'Absolute Perfection!';
+            resultsDescText.innerText = 'You demonstrated superb understanding of engineering layers and responsive styling. You are certified as an Academy Tutors Master!';
+        } else if (quizScore >= 200) {
+            resultsEmoji.innerText = '🌟';
+            resultsTitleText.innerText = 'Excellent Performance!';
+            resultsDescText.innerText = 'You have a strong understanding of web structures and AI integration vectors. Take the quiz again to grab a perfect score!';
+        } else {
+            resultsEmoji.innerText = '📚';
+            resultsTitleText.innerText = 'Keep Practicing!';
+            resultsDescText.innerText = 'Academy Tutors compilers recommend reading up on CSS variable paradigms and event action defaults. Retake the quiz to level up!';
+        }
+    }
+
+    btnQuizRestart.addEventListener('click', initQuiz);
+
+    // Bootstrap first execution
+    initQuiz();
+
+
+    /* ==========================================================================
+       7. TESTIMONIAL CAROUSEL SLIDER
+       ========================================================================== */
+    const carouselTrack = document.getElementById('carousel-track');
+    const carouselPrev = document.getElementById('carousel-prev');
+    const carouselNext = document.getElementById('carousel-next');
+    const dotsWrapper = document.getElementById('carousel-dots-wrapper');
+
+    let currentSlide = 0;
+
+    function updateCarousel() {
+        const cardWidth = carouselTrack.querySelector('.testimonial-card').clientWidth;
+        const gap = 30; 
+        const translateAmt = currentSlide * (cardWidth + gap);
+        
+        carouselTrack.style.transform = `translateX(-${translateAmt}px)`;
+        
+        const dots = dotsWrapper.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            if (index === currentSlide) {
+                dot.classList.add('active');
+            }
+        });
+    }
+
+    function createCarouselDots() {
+        const totalCards = carouselTrack.children.length;
+        const width = window.innerWidth;
+        let slideSteps = totalCards - 2; // For desktop
+        
+        if (width <= 768) {
+            slideSteps = totalCards; 
+        } else if (width <= 1024) {
+            slideSteps = totalCards - 1; 
+        }
+
+        if (slideSteps < 1) slideSteps = 1;
+
+        dotsWrapper.innerHTML = '';
+        for (let i = 0; i < slideSteps; i++) {
+            const dot = document.createElement('div');
+            dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+            dot.addEventListener('click', () => {
+                currentSlide = i;
+                updateCarousel();
+            });
+            dotsWrapper.appendChild(dot);
+        }
+    }
+
+    carouselNext.addEventListener('click', () => {
+        const totalCards = carouselTrack.children.length;
+        const width = window.innerWidth;
+        let limit = totalCards - 3;
+        
+        if (width <= 768) limit = totalCards - 1;
+        else if (width <= 1024) limit = totalCards - 2;
+
+        if (limit < 0) limit = 0;
+
+        if (currentSlide < limit) {
+            currentSlide++;
+        } else {
+            currentSlide = 0; 
+        }
+        updateCarousel();
+    });
+
+    carouselPrev.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+        } else {
+            const totalCards = carouselTrack.children.length;
+            const width = window.innerWidth;
+            let limit = totalCards - 3;
+            if (width <= 768) limit = totalCards - 1;
+            else if (width <= 1024) limit = totalCards - 2;
+            
+            currentSlide = limit; 
+        }
+        updateCarousel();
+    });
+
+    window.addEventListener('resize', () => {
+        createCarouselDots();
+        currentSlide = 0;
+        updateCarousel();
+    });
+
+    createCarouselDots();
+
+
+    /* ==========================================================================
+       8. FAQ ACCORDIONS
+       ========================================================================== */
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        btn.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = `${answer.scrollHeight}px`;
+            }
+        });
+    });
+
+
+    /* ==========================================================================
+       9. CONTACT FORM HANDLING & TOASTS
+       ========================================================================== */
+    const contactForm = document.getElementById('contact-form');
+    const toastContainer = document.getElementById('toast-container');
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const nameVal = document.getElementById('c-name').value.trim();
+        const emailVal = document.getElementById('c-email').value.trim();
+        const msgVal = document.getElementById('c-message').value.trim();
+
+        if (!nameVal || !emailVal || !msgVal) {
+            createToast('Required suggestion parameters are missing!', 'danger');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailVal)) {
+            createToast('Please state a valid email configuration.', 'danger');
+            return;
+        }
+
+        document.getElementById('c-name').value = '';
+        document.getElementById('c-email').value = '';
+        document.getElementById('c-message').value = '';
+
+        createToast(`Thank you, ${nameVal}! Lesson request submitted to curriculum writers.`, 'success');
+    });
+
+    function createToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        const emoji = type === 'success' ? '⚡' : '⚠️';
+        
+        toast.innerHTML = `
+            <span class="toast-icon">${emoji}</span>
+            <span>${message}</span>
+        `;
+        
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'fadeIn 0.3s ease reverse forwards';
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 4000);
+    }
+
+    /* ==========================================================================
+       10. EXPANDABLE SYLLABUS PATHWAYS LOGIC
+       ========================================================================== */
+    const expandBtns = document.querySelectorAll('.btn-syllabus-expand');
+
+    expandBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.syllabus-card');
+            const content = card.querySelector('.syllabus-expandable-content');
+            const isExpanded = card.classList.contains('expanded');
+
+            if (isExpanded) {
+                card.classList.remove('expanded');
+                content.style.maxHeight = '0px';
+                btn.innerHTML = 'Expand Core Lessons & Readings &darr;';
+            } else {
+                card.classList.add('expanded');
+                // Calculate dynamic scrollHeight and add breathing room
+                content.style.maxHeight = `${content.scrollHeight + 30}px`;
+                btn.innerHTML = 'Collapse Core Lessons &uarr;';
+                createToast('Loaded detailed lesson pathways and recommended reading links!', 'success');
+            }
+        });
+    });
+
+});
+
+
+</script>
+
+</body>
+</html>
